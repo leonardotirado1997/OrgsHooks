@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View } from 'react-native';
 
 import { useState } from "react";
 
@@ -16,6 +16,7 @@ export default function Stars({
     editable = false,
     large = false,
 }: StarsProps) {
+
     const [quantity, setQuantity] = useState(oldQuantity);
 
     const RenderStars = () => {
