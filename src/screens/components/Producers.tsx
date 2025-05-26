@@ -1,41 +1,35 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
-import Producer from "./Producer";
+import React from 'react';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
 
-import { loadProducers } from "../../services/loadData";
+import Producer from './Producer';
 
-type Producer = {
-    name: string;
-    image: any;
-    distance: string;
-    stars: number;
-};
+import useProducers, { ProducerItem } from '../../hooks/useProducers';
+
 
 interface ProducersProps {
     top: React.ComponentType;
 }
+const ListHeader = ({ Top, title }: {
+    Top: React.ComponentType; title:
+    string
+}) => (
+    <View>
+        <Top />
+        <Text style={styles.title}>{title}</Text>
+    </View>
+);
 
 export default function Producers({ top: Top }: ProducersProps) {
-    const [title, setTitle] = useState('');
-    const [list, setList] = useState<Producer[]>([]);
-
-    useEffect(() => {
-        const result = loadProducers();
-        setTitle(result.title);
-        setList(result.list);
-    }, []);
-
-    const TopOfList = () => {
-        return <>
-            <Top />
-            <Text style={styles.title}>{title}</Text>
-        </>
-    }
-
-    return <FlatList data={list}
-        renderItem={({ item }) => <Producer {...item} />}
-        keyExtractor={({ name }) => name}
-        ListHeaderComponent={TopOfList} />
+    const [title, list] = useProducers();
+    return (
+        <FlatList<ProducerItem>
+            data={list}
+            renderItem={({ item }) => <Producer {...item} />}
+            keyExtractor={({ name }) => name}
+            ListHeaderComponent={() => <ListHeader Top={Top}
+                title={title} />}
+        />
+    );
 }
 
 const styles = StyleSheet.create({
@@ -46,5 +40,5 @@ const styles = StyleSheet.create({
         marginTop: 16,
         fontWeight: 'bold',
         color: '#464646'
-    }
-})
+    },
+});
