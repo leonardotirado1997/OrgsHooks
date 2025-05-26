@@ -1,5 +1,5 @@
 const top = {
-    welcome: "Olá, Leonardo",
+    welcome: "Olá, Leonardo!",
     caption: "Encontre os melhores produtores",
 }
 
