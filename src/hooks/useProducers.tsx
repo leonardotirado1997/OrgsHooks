@@ -4,7 +4,7 @@ import { loadProducers } from '../services/loadData';
 export type ProducerItem = {
     name: string;
     image: any;
-    distance: string;
+    distance: number;
     stars: number;
 };
 

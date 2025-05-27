@@ -1,17 +1,29 @@
 import React from "react";
 import { Image, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Stars from "../../components/Stars";
-import { useReducer } from "react";
+import { useReducer, useMemo } from "react";
+
+const distanceInMeters = (distance: number) => {
+    console.log('distanceInMeters');
+    return `${distance}m`;
+};
+
+
 type ProducerProps = {
     name: string;
     image: ImageSourcePropType;
-    distance: string;
+    distance: number;
     stars: number;
 };
 
 export default function Producer({ name, image, distance, stars }: ProducerProps) {
     const [selected, toggleSelected] = useReducer((prev) => !prev,
         false
+    );
+
+    const formattedDistance = useMemo(
+        () => distanceInMeters(distance),
+        [distance]
     );
 
 
@@ -28,7 +40,7 @@ export default function Producer({ name, image, distance, stars }: ProducerProps
                     large={selected}
                 />
             </View>
-            <Text style={styles.distance}>{distance}</Text>
+            <Text style={styles.distance}>{formattedDistance}</Text>
         </View>
     </TouchableOpacity>;
 }

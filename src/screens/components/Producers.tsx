@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
 
 import Producer from './Producer';
-
 import useProducers, { ProducerItem } from '../../hooks/useProducers';
 
 
@@ -21,13 +20,15 @@ const ListHeader = ({ Top, title }: {
 
 export default function Producers({ top: Top }: ProducersProps) {
     const [title, list] = useProducers();
+
+    const listHeader = useMemo(() => <ListHeader Top={Top} title={title}
+/>, [Top, title]);
     return (
         <FlatList<ProducerItem>
             data={list}
             renderItem={({ item }) => <Producer {...item} />}
             keyExtractor={({ name }) => name}
-            ListHeaderComponent={() => <ListHeader Top={Top}
-                title={title} />}
+            ListHeaderComponent={listHeader}
         />
     );
 }
